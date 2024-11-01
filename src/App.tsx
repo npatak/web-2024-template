@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import useLocalStorageState from "use-local-storage-state";
 import styled from "styled-components";
 import {
@@ -41,29 +42,41 @@ const AppContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
   min-height: 100vh;
 `;
 
 const StyledCard = styled(Card)`
   && {
     margin: 1rem 0;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(45, 52, 54, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 15px;
     transition: transform 0.2s;
+    color: #fff;
     
     &:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .MuiTypography-root {
+      color: #fff;
+    }
+
+    .MuiIconButton-root {
+      color: #dfe6e9;
+      &:hover {
+        color: #74b9ff;
+      }
     }
   }
 `;
 
 const Title = styled(Typography)`
   && {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    color: #74b9ff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     font-weight: bold;
     margin-bottom: 2rem;
   }
@@ -167,16 +180,22 @@ function App() {
 
   return (
     <AppContainer>
-      <Title variant="h3" component="h1">
+      <Title variant="h3" component="div">
         Funky Recipe Book 🍳
       </Title>
       
       <Button
         variant="contained"
-        color="secondary"
+        color="primary"
         startIcon={<AddIcon />}
         onClick={() => setIsDialogOpen(true)}
-        sx={{ mb: 3 }}
+        sx={{ 
+          mb: 3,
+          background: '#74b9ff',
+          '&:hover': {
+            background: '#0984e3'
+          }
+        }}
       >
         Add New Recipe
       </Button>
@@ -227,7 +246,36 @@ function App() {
         ))}
       </Stack>
 
-      <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} maxWidth="md" fullWidth>
+      <Dialog 
+        open={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)} 
+        maxWidth="md" 
+        fullWidth
+        PaperProps={{
+          sx: {
+            background: '#2d3436',
+            color: '#fff',
+            '.MuiDialogTitle-root': {
+              color: '#74b9ff'
+            },
+            '.MuiInputLabel-root': {
+              color: '#dfe6e9'
+            },
+            '.MuiOutlinedInput-root': {
+              color: '#fff',
+              '& fieldset': {
+                borderColor: '#636e72'
+              },
+              '&:hover fieldset': {
+                borderColor: '#74b9ff'
+              }
+            },
+            '.MuiButton-root': {
+              color: '#dfe6e9'
+            }
+          }
+        }}
+      >
         <DialogTitle>
           {editingRecipe ? 'Edit Recipe' : 'Add New Recipe'}
         </DialogTitle>
